@@ -17,7 +17,9 @@ Module.directive('dateRange', ['$compile', 'datePickerUtils', 'dateTimeConfig', 
   return {
     scope: {
       start: '=',
-      end: '='
+      end: '=',
+      min: '=',
+      max: '='
     },
     link: function (scope, element, attrs) {
       var dateChange = null,
@@ -72,9 +74,9 @@ Module.directive('dateRange', ['$compile', 'datePickerUtils', 'dateTimeConfig', 
       attrs.onSetDate = 'dateChange';
 
       var template = '<div><table class="date-range"><tr><td valign="top">' +
-        getTemplate(attrs, pickerIDs[0], 'start', false, scope.end) +
+        getTemplate(attrs, pickerIDs[0], 'start', scope.min ? scope.start : false, scope.end) +
         '</td><td valign="top">' +
-        getTemplate(attrs, pickerIDs[1], 'end', scope.start, false) +
+        getTemplate(attrs, pickerIDs[1], 'end', scope.start, scope.max ? scope.end : false) +
         '</td></tr></table></div>';
 
       var picker = $compile(template)(scope);
